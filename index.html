@@ -34,14 +34,21 @@
                     </ul>
                 </div>
                 <div v-for="variant in variants" :keys="variant.variantId">
-                    <p>
+                    <p @mouseover="updateProduct(variant.variantImage)" >
                         {{variant.variantBrand}}
                     </p>
                 </div>
+                
+                <button v-on:Click="addToCart">Add to cart</button>
+                <div class="cart">
+                    <p>Cart({{cart}})  </p>
+                </div>
+                <br>
+                <button v-on:Click="removeFromCart">Remove from cart</button>
+
+                
             </div>
         </div>
-    
-
     </div>
 
 <!--The VUE Script must be first.. then the other scripts :) -->
