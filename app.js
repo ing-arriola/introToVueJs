@@ -5,6 +5,18 @@ var app= new Vue({
         description: 'The best portable music player :)',
         image: './images/diskman-sony.jpg', //Image ti be displayed
         inventory:8,
-        sale:true
+        sale:true,
+        details: ["Unlimited antishock","High sound quality","Long battery life","Rechargeable battery"],
+        variants: [
+            {
+                variantId:001,
+                variantBrand:"Sony"
+            },
+            {
+                variantId:002,
+                variantBrand:"Philips"
+            }
+        ]
     }
+    
 })
