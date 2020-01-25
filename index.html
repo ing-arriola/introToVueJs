@@ -14,9 +14,16 @@
     <div id="app">
 
         <div class="product">
-            <h1>
-                {{ product }}
-            </h1>
+<!-- This div contains two divs: One for the image and another for the info -->            
+            <div class="product-image">
+                <img v-bind:src="image"> <!-- v-bind Dinamically binds an attribute to an expression  -->
+            </div>
+            
+            <div class="product-info">
+                <h1>
+                    {{ product }}
+                </h1>
+            </div>
         </div>
     
 
