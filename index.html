@@ -21,7 +21,7 @@
             
             <div class="product-info">
                 <h1>
-                    {{ product }}
+                    {{ title }}
                 </h1>
                 <p> {{description}} </p>
                 <p v-if="inventory >10" > IN STOCK</p>
@@ -33,12 +33,12 @@
                         <li v-for='detail in details'> {{detail}} </li>
                     </ul>
                 </div>
-                <div v-for="variant in variants" 
+                <div v-for="(variant, index) in variants" 
                      :keys="variant.variantId"
                      class="color-box"
                      :style="{backgroundColor:variant.variantColor}"
                      >
-                    <p @mouseover="updateProduct(variant.variantImage)" >
+                    <p @mouseover="updateProduct(index)" >
                         {{variant.variantBrand}}
                     </p>
                 </div>
