@@ -41,9 +41,7 @@ template:`<div class="product">
                         :disabled="!sale"
                         :class="{disabledButton: !sale}"
                         >Add to cart</button>
-                <div class="cart">
-                    <p>Cart({{cart}})  </p>
-                </div>
+                
                 <br>
                 <button v-on:click="removeFromCart"
                         :disabled="remove"
@@ -83,8 +81,7 @@ data(){
                 variantColor:"black",
                 variatnQuantity:0
             }
-        ],
-        cart:0
+        ]
 
     }
 
@@ -92,23 +89,15 @@ data(){
 methods:{
 
     addToCart() {
-        this.cart+=1
-        if(this.cart>1){
-            this.remove=false
-        }
+        this.$emit('add-to-cart', this.variants[this.selectedVariable].variantId)
+        
     },
     updateProduct(index){
         this.selectedVariable=index
         
     },
     removeFromCart(){
-        if (this.cart>0) {
-            this.cart-=1    
-            this.remove=false
-        }else{
-            this.remove=true
-        }
-        
+        this.$emit('remove-from-cart',this.variants[this.selectedVariable].variantId)
     }
 
 },
@@ -135,6 +124,23 @@ computed:{
 var app= new Vue({
     el: '#app',//Name of the referenced element in the HTML
     data:{
-        premium:true
+        premium:true,
+        cart:[]
+    },
+    methods:{
+        updateCart(id){
+            this.cart.push(id)
+            if(this.cart.length>1){
+                this.remove=false
+            }
+        },
+        removeItem(id){
+            if (this.cart.length>0) {
+                this.cart.splice(this.cart.indexOf(id),1)
+                this.remove=false
+            }else{
+                this.remove=true
+            }
+        }
     }
 })
