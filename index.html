@@ -13,52 +13,8 @@
 
     <div id="app">
 
-        <div class="product">
-<!-- This div contains two divs: One for the image and another for the info -->            
-            <div class="product-image">
-                <img v-bind:src="image"> <!-- v-bind Dinamically binds an attribute to an expression  -->
-            </div>
-            
-            <div class="product-info">
-                <h1>
-                    {{ title }}
-                </h1>
-                <p> {{description}} </p>
-                <p v-if="inventory >10" > IN STOCK</p>
-                <p v-else-if="inventory <= 10 && inventory > 0">Almost sold out!!!</p>
-                <p v-else> OUT OF STOCK </p>
-                <p v-if="sale">ON SALE!!</p>
-                <div>
-                    <ul>
-                        <li v-for='detail in details'> {{detail}} </li>
-                    </ul>
-                </div>
-                <div v-for="(variant, index) in variants" 
-                     :keys="variant.variantId"
-                     class="color-box"
-                     :style="{backgroundColor:variant.variantColor}"
-                     >
-                    <p @mouseover="updateProduct(index)" >
-                        {{variant.variantBrand}}
-                    </p>
-                </div>
-                
-                <button v-on:Click="addToCart" 
-                        :disabled="!sale"
-                        :class="{disabledButton: !sale}"
-                        >Add to cart</button>
-                <div class="cart">
-                    <p>Cart({{cart}})  </p>
-                </div>
-                <br>
-                <button v-on:Click="removeFromCart"
-                        :disabled="remove"
-                        :class="{disabledButton: remove}">
-                        Remove from cart</button>
-
-                
-            </div>
-        </div>
+        <product :premium="premium"> </product>
+        
     </div>
 
 <!--The VUE Script must be first.. then the other scripts :) -->

@@ -1,6 +1,64 @@
-var app= new Vue({
-    el: '#app',//Name of the referenced element in the HTML
-    data: {
+Vue.component('product',{
+props:{
+    premium:{
+        type: Boolean,
+        required:true
+    }
+}
+,
+template:`<div class="product">
+        <!-- This div contains two divs: One for the image and another for the info -->            
+            <div class="product-image">
+                <img v-bind:src="image"> <!-- v-bind Dinamically binds an attribute to an expression  -->
+            </div>
+            
+            <div class="product-info">
+                <h1>
+                    {{ title }}
+                </h1>
+                <p> {{description}} </p>
+                <p v-if="inventory >10" > IN STOCK</p>
+                <p v-else-if="inventory <= 10 && inventory > 0">Almost sold out!!!</p>
+                <p v-else> OUT OF STOCK </p>
+                <p v-if="sale">ON SALE!!</p>
+                <p>Shipping: {{ shipping }}</p>
+                <div>
+                    <ul>
+                        <li v-for='detail in details'> {{detail}} </li>
+                    </ul>
+                </div>
+                <div v-for="(variant, index) in variants" 
+                     :keys="variant.variantId"
+                     class="color-box"
+                     :style="{backgroundColor:variant.variantColor}"
+                     >
+                    <p @mouseover="updateProduct(index)" >
+                        {{variant.variantBrand}}
+                    </p>
+                </div>
+                
+                <button v-on:click="addToCart" 
+                        :disabled="!sale"
+                        :class="{disabledButton: !sale}"
+                        >Add to cart</button>
+                <div class="cart">
+                    <p>Cart({{cart}})  </p>
+                </div>
+                <br>
+                <button v-on:click="removeFromCart"
+                        :disabled="remove"
+                        :class="{disabledButton: remove}">
+                        Remove from cart</button>
+
+                
+            </div>
+        </div>
+`
+,
+
+data(){
+    return{
+
         product: 'Discman',//Data to be displayed
         brand:'Sony',
         description: 'The best portable music player :)',
@@ -27,35 +85,56 @@ var app= new Vue({
             }
         ],
         cart:0
-    },
-    computed: {
-        title() {
-            return this.product + ' ' + this.brand
-        },
-        image(){
-            return this.variants[this.selectedVariable].variantImage
+
+    }
+
+},
+methods:{
+
+    addToCart() {
+        this.cart+=1
+        if(this.cart>1){
+            this.remove=false
         }
     },
-    methods:{
-        addToCart:function() {
-            this.cart+=1
-            if(this.cart>1){
-                this.remove=false
-            }
-        },
-        updateProduct:function(index){
-            this.selectedVariable=index
-            
-        },
-        removeFromCart:function(){
-            if (this.cart>0) {
-                this.cart-=1    
-                this.remove=false
-            }else{
-                this.remove=true
-            }
-            
+    updateProduct(index){
+        this.selectedVariable=index
+        
+    },
+    removeFromCart(){
+        if (this.cart>0) {
+            this.cart-=1    
+            this.remove=false
+        }else{
+            this.remove=true
+        }
+        
+    }
+
+},
+computed:{
+    title() {
+        return this.product + ' ' + this.brand
+    },
+    image(){
+        return this.variants[this.selectedVariable].variantImage
+    },
+    shipping(){
+        if(this.premium){
+            return "Free"
+        }else{
+            return "$2.99"
         }
     }
-    
+}
+
+}
+
+)
+
+var app= new Vue({
+    el: '#app',//Name of the referenced element in the HTML
+    data:{
+        premium:true
+    }
 })
