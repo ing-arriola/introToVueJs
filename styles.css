@@ -34,9 +34,14 @@ body {
   }
   
   .color-box {
-    width: 40px;
+    width: 60px;
     height: 40px;
-    margin-top: 5px;
+    text-align: center;
+    vertical-align: middle;
+    padding: 5px;
+    color: white;
+    font-weight: bold;
+    margin: 10px;
   }
   
   .cart {
@@ -87,4 +92,8 @@ body {
   .activeTab {
     color: #16C0B0;
     text-decoration: underline;
+  }
+
+  h1{
+      font-size: 40px;
   }
